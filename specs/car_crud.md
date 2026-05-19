@@ -5,6 +5,7 @@ Car CRUD System
 # BACKEND
 
 Create Car model with:
+- plate_number (string)
 - brand (string)
 - model (string)
 - year (integer)
