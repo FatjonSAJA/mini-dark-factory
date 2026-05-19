@@ -1,129 +1,86 @@
-# FEATURE: Car CRUD Frontend (React)
+# CAR CRUD FRONTEND SPEC
 
-## GOAL
-Build a fully working React CRUD UI that connects to the Django API at:
+## 1. PURPOSE
+Build a fully functional CRUD UI for managing cars.
 
-http://127.0.0.1:8000/api/cars/
-
----
-
-## DATA MODEL
-
-Car object:
-
-- id (integer)
-- plate_number (string)
-- brand (string)
-- model (string)
-- year (integer)
+This spec is the ONLY source of truth.
+No manual UI implementation is allowed.
 
 ---
 
-## API ENDPOINTS
+## 2. DATA MODEL (from backend API)
 
-- GET    /api/cars/        → list all cars
-- POST   /api/cars/        → create car
-- PUT    /api/cars/{id}/   → update car
-- DELETE /api/cars/{id}/   → delete car
-
----
-
-## FRONTEND REQUIREMENTS
-
-### 1. API SERVICE (mandatory)
-
-Create a centralized API file:
-
-frontend/src/api/cars.js
-
-It must include:
-
-- getCars()
-- createCar(data)
-- updateCar(id, data)
-- deleteCar(id)
-
-All using axios.
+Car:
+- id: integer
+- brand: string
+- model: string
+- year: integer
+- price: float
 
 ---
 
-### 2. COMPONENTS
+## 3. API CONTRACT
 
-Generate these React components:
-
-#### CarTable.jsx
-- Fetch and display list of cars
-- Show:
-  - plate_number
-  - brand
-  - model
-  - year
-- Include "Delete" button per row
-- Refresh list after delete
+GET    /api/cars/       → list cars
+POST   /api/cars/       → create car
+GET    /api/cars/{id}/  → get car
+PUT    /api/cars/{id}/  → update car
+DELETE /api/cars/{id}/  → delete car
 
 ---
 
-#### CarForm.jsx
-- Controlled form with fields:
-  - plate_number
-  - brand
-  - model
-  - year
-- Submit button creates car via API
-- Clears form after submit
-- Refresh table after create
+## 4. UI REQUIREMENTS
+
+The agent must generate a React UI with:
+
+### 4.1 Pages
+- /cars → list page
+- /cars/new → create page
+- /cars/{id}/edit → edit page
+
+### 4.2 Components
+- CarTable
+- CarForm
+- DeleteConfirmationModal
 
 ---
 
-#### Optional (if needed by builder):
-- EditCarModal.jsx (for updating cars)
+## 5. UX RULES (IMPORTANT)
+
+- Must be fully responsive
+- Must show loading states
+- Must show error states
+- Must auto-refresh after CRUD actions
+- Must NOT require page reload
 
 ---
 
-### 3. STATE MANAGEMENT RULES
+## 6. VALIDATION RULES (HOLDOUT TESTS)
 
-- Use React hooks only (useState, useEffect)
-- No Redux
-- No external state libraries
+Agent must pass:
 
----
-
-### 4. DATA FLOW
-
-- CarForm → POST /api/cars/
-- CarTable → GET /api/cars/
-- Delete button → DELETE /api/cars/{id}/
+- Creating a car updates list immediately
+- Editing car persists after refresh
+- Deleting car removes row instantly
+- API failure shows error UI
 
 ---
 
-### 5. UI RULES
+## 7. ACCEPTANCE CRITERIA
 
-- Simple table layout
-- Minimal styling
-- Functional over design
-- Must be fully working CRUD, not mock UI
+Build is valid ONLY if:
 
----
-
-### 6. INTEGRATION RULE
-
-All components must be connected via:
-
-- frontend/src/App.jsx
-
-App.jsx must:
-- render CarForm
-- render CarTable
-- ensure state refresh between them
-
----
-
-## SUCCESS CRITERIA
-
-Frontend is considered complete if:
-
-✔ Cars can be created  
-✔ Cars are listed  
-✔ Cars can be deleted  
-✔ UI updates without refresh  
+✔ All CRUD operations work  
 ✔ No console errors  
+✔ UI matches API schema  
+✔ Tests pass (see /tests/frontend)
+
+---
+
+## 8. AUTONOMY RULE
+
+Human developers must NOT modify React code directly.
+
+All changes must be generated via:
+→ frontend_builder agent
+→ validation agent loop
