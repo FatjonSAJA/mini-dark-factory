@@ -1,7 +1,12 @@
-from rest_framework import viewsets
+
+from rest_framework.viewsets import ModelViewSet
+
 from .models import Car
 from .serializers import CarSerializer
 
-class CarViewSet(viewsets.ModelViewSet):
+
+class CarViewSet(ModelViewSet):
+
     queryset = Car.objects.all()
+
     serializer_class = CarSerializer

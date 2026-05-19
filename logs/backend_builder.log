@@ -1,39 +1,6 @@
 
-[2026-05-19 16:21:14]
-{'models.py': '\nfrom django.db import models\n\nclass Car(models.Model):\n    brand = models.CharField(max_length=100)\n    model = models.CharField(max_length=100)\n    year = models.IntegerField()\n', 'views.py': '\nfrom rest_framework.viewsets import ModelViewSet\n\nfrom .models import CarViewSet\nfrom .serializers import CarViewSetSerializer\n\n\nclass CarViewSetViewSet(ModelViewSet):\n\n    queryset = CarViewSet.objects.all()\n    serializer_class = CarViewSetSerializer\n'}
+[2026-05-19 22:13:36]
+{'models.py': '\nfrom django.db import models\n\n\nclass Car(models.Model):\n\n    plate_number = models.CharField(max_length=255)\n    brand = models.CharField(max_length=255)\n    model = models.CharField(max_length=255)\n    year = models.IntegerField()\n', 'serializers.py': '\nfrom rest_framework import serializers\n\nfrom .models import Car\n\n\nclass CarSerializer(serializers.ModelSerializer):\n\n    class Meta:\n\n        model = Car\n\n        fields = "__all__"\n', 'views.py': '\nfrom rest_framework.viewsets import ModelViewSet\n\nfrom .models import Car\nfrom .serializers import CarSerializer\n\n\nclass CarViewSet(ModelViewSet):\n\n    queryset = Car.objects.all()\n\n    serializer_class = CarSerializer\n', 'urls.py': '\nfrom rest_framework.routers import DefaultRouter\n\nfrom .views import CarViewSet\n\n\nrouter = DefaultRouter()\n\nrouter.register(\n    r"cars",\n    CarViewSet\n)\n\nurlpatterns = router.urls\n'}
 
-[2026-05-19 16:21:44]
-{'models.py': '\nfrom django.db import models\n\nclass Car(models.Model):\n    brand = models.CharField(max_length=100)\n    model = models.CharField(max_length=100)\n    year = models.IntegerField()\n'}
-
-[2026-05-19 16:22:19]
-{'models.py': '\nfrom django.db import models\n\nclass Car(models.Model):\n    brand = models.CharField(max_length=100)\n    model = models.CharField(max_length=100)\n    year = models.IntegerField()\n'}
-
-[2026-05-19 16:23:06]
-{'models.py': '\nfrom django.db import models\n\nclass Car(models.Model):\n    brand = models.CharField(max_length=100)\n    model = models.CharField(max_length=100)\n    year = models.IntegerField()\n'}
-
-[2026-05-19 16:23:38]
-{}
-
-[2026-05-19 16:37:11]
-{'models.py': '\nfrom django.db import models\n\nclass Car(models.Model):\n    brand = models.CharField(max_length=100)\n    model = models.CharField(max_length=100)\n    year = models.IntegerField()\n'}
-
-[2026-05-19 17:08:56]
-{'models.py': '\nfrom django.db import models\n\nclass Car(models.Model):\n    brand = models.CharField(max_length=100)\n    model = models.CharField(max_length=100)\n    year = models.IntegerField()\n'}
-
-[2026-05-19 17:09:27]
-{'models.py': '\nfrom django.db import models\n\nclass Car(models.Model):\n    brand = models.CharField(max_length=100)\n    model = models.CharField(max_length=100)\n    year = models.IntegerField()\n', 'views.py': '\nfrom rest_framework.viewsets import ModelViewSet\n\nfrom .models import CarViewSet\nfrom .serializers import CarViewSetSerializer\n\n\nclass CarViewSetViewSet(ModelViewSet):\n\n    queryset = CarViewSet.objects.all()\n    serializer_class = CarViewSetSerializer\n'}
-
-[2026-05-19 17:10:05]
-{'models.py': '\nfrom django.db import models\n\nclass Car(models.Model):\n    brand = models.CharField(max_length=100)\n    model = models.CharField(max_length=100)\n    year = models.IntegerField()\n'}
-
-[2026-05-19 17:10:38]
-{'models.py': '\nfrom django.db import models\n\nclass Car(models.Model):\n    brand = models.CharField(max_length=100)\n    model = models.CharField(max_length=100)\n    year = models.IntegerField()\n', 'views.py': '\nfrom rest_framework.viewsets import ModelViewSet\n\nfrom .models import CarViewSet\nfrom .serializers import CarViewSetSerializer\n\n\nclass CarViewSetViewSet(ModelViewSet):\n\n    queryset = CarViewSet.objects.all()\n    serializer_class = CarViewSetSerializer\n'}
-
-[2026-05-19 17:11:12]
-{'models.py': '\nfrom django.db import models\n\nclass Car(models.Model):\n    brand = models.CharField(max_length=100)\n    model = models.CharField(max_length=100)\n    year = models.IntegerField()\n'}
-
-[2026-05-19 21:19:16]
-{'models.py': '\nfrom django.db import models\n\nclass Car(models.Model):\n    brand = models.CharField(max_length=100)\n    model = models.CharField(max_length=100)\n    year = models.IntegerField()\n', 'views.py': '\nfrom rest_framework.viewsets import ModelViewSet\n\nfrom .models import CarViewSet\nfrom .serializers import CarViewSetSerializer\n\n\nclass CarViewSetViewSet(ModelViewSet):\n\n    queryset = CarViewSet.objects.all()\n    serializer_class = CarViewSetSerializer\n'}
-
-[2026-05-19 21:21:32]
-{'models.py': '\nfrom django.db import models\n\nclass Car(models.Model):\n    brand = models.CharField(max_length=100)\n    model = models.CharField(max_length=100)\n    year = models.IntegerField()\n'}
+[2026-05-19 22:14:28]
+{'models.py': '\nfrom django.db import models\n\n\nclass Car(models.Model):\n\n    plate_number = models.CharField(max_length=255)\n    brand = models.CharField(max_length=255)\n    model = models.CharField(max_length=255)\n    year = models.IntegerField()\n', 'serializers.py': '\nfrom rest_framework import serializers\n\nfrom .models import Car\n\n\nclass CarSerializer(serializers.ModelSerializer):\n\n    class Meta:\n\n        model = Car\n\n        fields = "__all__"\n', 'views.py': '\nfrom rest_framework.viewsets import ModelViewSet\n\nfrom .models import Car\nfrom .serializers import CarSerializer\n\n\nclass CarViewSet(ModelViewSet):\n\n    queryset = Car.objects.all()\n\n    serializer_class = CarSerializer\n', 'urls.py': '\nfrom rest_framework.routers import DefaultRouter\n\nfrom .views import CarViewSet\n\n\nrouter = DefaultRouter()\n\nrouter.register(\n    r"cars",\n    CarViewSet\n)\n\nurlpatterns = router.urls\n'}

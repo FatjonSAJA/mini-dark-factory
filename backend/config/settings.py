@@ -14,7 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
@@ -79,7 +79,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'car_factory',
+        'NAME': 'car_factory_01',
         'USER': 'dark-factory-user',
         'PASSWORD': 'dark-factory-user',
         'HOST': 'localhost',

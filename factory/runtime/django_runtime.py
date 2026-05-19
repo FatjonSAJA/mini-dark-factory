@@ -7,7 +7,8 @@ def run_migrations():
         [
             "python",
             "manage.py",
-            "makemigrations"
+            "makemigrations",
+            "cars"
         ],
         cwd="backend"
     )

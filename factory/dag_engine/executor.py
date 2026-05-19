@@ -50,6 +50,7 @@ def execute_node(node, context):
 
         node.result = result
         node.completed = True
+        print(f"✅ Completed node: {node.name}")
     except Exception as e:
 
         log_message(
@@ -57,8 +58,18 @@ def execute_node(node, context):
             str(e)
         )
 
-def execute_graph(nodes, initial_input):
+        print(f"❌ Node failed: {node.name}")
 
+        print(str(e))
+
+        node.completed = True
+
+        raise
+
+def execute_graph(nodes, initial_input):
+    max_cycles = 50
+
+    cycle = 0
     context = {
         "input": initial_input
     }
@@ -101,5 +112,10 @@ def execute_graph(nodes, initial_input):
 
             for future in futures:
                 future.result()
+        cycle += 1
 
+        if cycle > max_cycles:
+            raise Exception(
+                "DAG executor exceeded max cycles"
+            )
     return context

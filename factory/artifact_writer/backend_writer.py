@@ -1,7 +1,7 @@
 from factory.artifact_writer.file_utils import write_file
 
 
-BACKEND_BASE = "backend/generated/cars"
+BACKEND_BASE = "backend/cars"
 
 
 def write_backend_files(generated_backend):
