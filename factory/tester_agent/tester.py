@@ -1,6 +1,25 @@
+import requests
+
+BASE_URL = "http://localhost:8000/api/cars/"
+
+
 def run_tests():
-    return [
-        {"name": "api_health", "status": True},
-        {"name": "frontend_build", "status": True},
-        {"name": "schema_valid", "status": True}
-    ]
+
+    tests = []
+
+    # LIST TEST
+    try:
+        r = requests.get(BASE_URL)
+
+        tests.append({
+            "name": "list_cars",
+            "status": r.status_code == 200
+        })
+
+    except:
+        tests.append({
+            "name": "list_cars",
+            "status": False
+        })
+
+    return tests
