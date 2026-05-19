@@ -13,13 +13,16 @@ def run_tests():
 
         tests.append({
             "name": "list_cars",
-            "status": r.status_code == 200
+            "status": r.status_code == 200,
+            "details": "GET /api/cars returned 200"
         })
 
-    except:
+
+    except Exception as e:
         tests.append({
             "name": "list_cars",
-            "status": False
+            "status": False,
+            "details": str(e)
         })
 
     return tests

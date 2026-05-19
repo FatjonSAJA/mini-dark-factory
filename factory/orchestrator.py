@@ -1,5 +1,7 @@
+from factory.dag_engine.graph import build_graph
+from factory.dag_engine.executor import execute_graph
 from factory.spec_engine.repair import repair_spec
-
+from factory.logger import log_message
 
 MAX_ITERATIONS = 5
 
@@ -10,22 +12,25 @@ def run_factory(spec_text):
 
     for i in range(MAX_ITERATIONS):
 
-        print(f"🔁 Iteration {i+1}")
+        print(f"\n🔁 ITERATION {i+1}")
 
-        plan = create_plan(current_spec)
+        graph = build_graph()
 
-        backend = build_backend(plan["backend_tasks"])
+        context = execute_graph(
+            graph,
+            current_spec
+        )
 
-        frontend = build_frontend(plan["frontend_tasks"])
-
-        tests = run_tests()
-
-        failures = [t for t in tests if not t["status"]]
+        failures = [
+            t for t in context["tests"]
+            if not t["status"]
+        ]
 
         if not failures:
+
             return {
                 "status": "SUCCESS",
-                "plan": plan
+                "context": context
             }
 
         current_spec = repair_spec(
@@ -33,4 +38,14 @@ def run_factory(spec_text):
             failures
         )
 
-    return {"status": "FAILED"}
+        log_message(
+            "iterations.log",
+            {
+                "iteration": i + 1,
+                "tests": failures
+            }
+        )
+
+    return {
+        "status": "FAILED"
+    }

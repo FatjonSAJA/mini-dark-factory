@@ -10,12 +10,29 @@ Your task:
 
 Return ONLY valid JSON.
 
-# OUTPUT FORMAT
+# REQUIRED FORMAT
 
 {
-  "backend_tasks": [],
-  "frontend_tasks": [],
-  "test_tasks": []
+  "backend_tasks": [
+    {
+      "type": "model",
+      "name": "Car"
+    }
+  ],
+
+  "frontend_tasks": [
+    {
+      "type": "component",
+      "name": "CarTable"
+    }
+  ],
+
+  "test_tasks": [
+    {
+      "type": "api_test",
+      "name": "list_cars"
+    }
+  ]
 }
 
 # RULES
@@ -25,3 +42,6 @@ Return ONLY valid JSON.
 - CRUD operations must include create, list, update, delete
 - use ModelViewSet
 - use centralized API service
+- DO NOT return explanations.
+- DO NOT return markdown.
+- DO NOT return strings like "model:Car".
