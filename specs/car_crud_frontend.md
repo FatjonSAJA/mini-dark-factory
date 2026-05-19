@@ -1,14 +1,30 @@
-# CAR CRUD FRONTEND SPEC
+# CAR CRUD FRONTEND - DARK FACTORY SPEC
 
 ## 1. PURPOSE
-Build a fully functional CRUD UI for managing cars.
+This spec defines a fully autonomous frontend generation system for a Car CRUD module.
 
-This spec is the ONLY source of truth.
-No manual UI implementation is allowed.
+The system MUST generate code directly into:
+👉 frontend/src/cars
+
+No manual UI coding is allowed inside this module.
 
 ---
 
-## 2. DATA MODEL (from backend API)
+## 2. OWNERSHIP RULE (CRITICAL)
+
+The factory owns ONLY:
+
+/src/cars/**
+
+It MUST NOT modify:
+- /src/app
+- /src/shared
+- routing outside /cars
+- global state
+
+---
+
+## 3. DATA MODEL
 
 Car:
 - id: integer
@@ -19,68 +35,81 @@ Car:
 
 ---
 
-## 3. API CONTRACT
+## 4. API CONTRACT
 
-GET    /api/cars/       → list cars
-POST   /api/cars/       → create car
-GET    /api/cars/{id}/  → get car
-PUT    /api/cars/{id}/  → update car
-DELETE /api/cars/{id}/  → delete car
+GET    /api/cars/
+POST   /api/cars/
+GET    /api/cars/{id}/
+PUT    /api/cars/{id}/
+DELETE /api/cars/{id}/
 
 ---
 
-## 4. UI REQUIREMENTS
+## 5. GENERATED UI STRUCTURE
 
-The agent must generate a React UI with:
+Factory MUST generate:
 
-### 4.1 Pages
-- /cars → list page
-- /cars/new → create page
-- /cars/{id}/edit → edit page
+/src/cars/pages
+- CarsListPage
+- CarCreatePage
+- CarEditPage
 
-### 4.2 Components
+/src/cars/components
 - CarTable
 - CarForm
-- DeleteConfirmationModal
+- DeleteModal
+
+/src/cars/services
+- carService.js
+
+/src/cars/hooks
+- useCars.js
 
 ---
 
-## 5. UX RULES (IMPORTANT)
+## 6. UI REQUIREMENTS
 
-- Must be fully responsive
-- Must show loading states
-- Must show error states
-- Must auto-refresh after CRUD actions
-- Must NOT require page reload
-
----
-
-## 6. VALIDATION RULES (HOLDOUT TESTS)
-
-Agent must pass:
-
-- Creating a car updates list immediately
-- Editing car persists after refresh
-- Deleting car removes row instantly
-- API failure shows error UI
+- Full CRUD functionality
+- Responsive layout
+- Loading states
+- Error states
+- Optimistic UI updates
+- No page reload required
 
 ---
 
-## 7. ACCEPTANCE CRITERIA
+## 7. VALIDATION SCENARIOS (FACTORY LOOP)
 
-Build is valid ONLY if:
+The build is INVALID unless ALL pass:
 
-✔ All CRUD operations work  
+1. Create car → appears in list instantly
+2. Edit car → persists after refresh
+3. Delete car → removed immediately
+4. API failure → shows error UI
+5. Loading state visible on all API calls
+
+---
+
+## 8. ACCEPTANCE CRITERIA
+
 ✔ No console errors  
-✔ UI matches API schema  
-✔ Tests pass (see /tests/frontend)
+✔ All CRUD flows work  
+✔ Matches API contract  
+✔ No modifications outside /src/cars  
+✔ All validation scenarios pass  
 
 ---
 
-## 8. AUTONOMY RULE
+## 9. EXECUTION RULE
 
-Human developers must NOT modify React code directly.
+The frontend is NOT manually written.
 
-All changes must be generated via:
-→ frontend_builder agent
-→ validation agent loop
+It is generated via:
+→ frontend_builder/builder.py
+
+The builder MUST:
+1. Parse this spec
+2. Build modules
+3. Write directly into /src/cars
+4. Validate output
+5. Retry until valid
