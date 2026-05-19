@@ -1,25 +1,36 @@
-from .spec_engine.parser import parse_spec
-from .planner_agent.planner import create_plan
-from .backend_builder.builder import build_backend
-from .frontend_builder.builder import build_frontend
-from .tester_agent.tester import run_tests
+from factory.spec_engine.repair import repair_spec
+
+
+MAX_ITERATIONS = 5
 
 
 def run_factory(spec_text):
 
-    spec = parse_spec(spec_text)
+    current_spec = spec_text
 
-    plan = create_plan(spec)
+    for i in range(MAX_ITERATIONS):
 
-    backend = build_backend(plan["backend_tasks"])
-    frontend = build_frontend(plan["frontend_tasks"])
+        print(f"🔁 Iteration {i+1}")
 
-    tests = run_tests()
+        plan = create_plan(current_spec)
 
-    return {
-        "spec": spec,
-        "plan": plan,
-        "backend": backend,
-        "frontend": frontend,
-        "tests": tests
-    }
+        backend = build_backend(plan["backend_tasks"])
+
+        frontend = build_frontend(plan["frontend_tasks"])
+
+        tests = run_tests()
+
+        failures = [t for t in tests if not t["status"]]
+
+        if not failures:
+            return {
+                "status": "SUCCESS",
+                "plan": plan
+            }
+
+        current_spec = repair_spec(
+            current_spec,
+            failures
+        )
+
+    return {"status": "FAILED"}
